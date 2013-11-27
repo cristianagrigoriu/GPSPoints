@@ -1,5 +1,19 @@
 package com.cg.gpspoints;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -7,6 +21,7 @@ import com.google.android.gms.location.LocationClient;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.app.Activity;
 import android.content.DialogInterface.OnClickListener;
 import android.util.Log;
@@ -39,6 +54,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
 	    
+	    
 	    // Check that Google Play services is available
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         // If Google Play services is available
@@ -48,7 +64,7 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
                     "Google Play services is available.");
         }
         else
-        	Toast.makeText(this, "Nu :(", Toast.LENGTH_LONG).show();
+        	Toast.makeText(this, "Google Play services is not available.", Toast.LENGTH_LONG).show();
 
 	    btnGPS = (Button) findViewById(R.id.btnGPS);
 
@@ -72,6 +88,9 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	    		//Toast.makeText(this, "Am apasat", Toast.LENGTH_LONG).show();
 	    		Location mCurrentLocation = mLocationClient.getLastLocation();
 	    		Toast.makeText(this, "Aici lat: " + mCurrentLocation.getLatitude() + " long: " + mCurrentLocation.getLongitude(), Toast.LENGTH_LONG).show();
+	    		
+	    		//sendPointsToServer();
+	    		new HTTPRequest().execute(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 	    	default:	
 	    }
 	  }
@@ -126,3 +145,4 @@ public class MainActivity extends Activity implements android.view.View.OnClickL
 	    }
 	  
 	}
+
