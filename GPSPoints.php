@@ -8,7 +8,8 @@
 <body>
 	<button onclick="alert('Aici se intimpla ceva!')">Aici</button>
  	<?php 
-	echo "<p>1</p>";
+	echo "<p>1<br/></p>";
+	echo "<p>2/p>";
 	//echo "<p>$_POST['lat']</p>";
 	//echo "<p>$_POST['long']</p>";
 
